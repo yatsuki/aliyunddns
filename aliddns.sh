@@ -325,7 +325,7 @@ ShowVersion() {
 ShowHelp() {
     echo -e "阿里云DDNS解析脚本版"
     echo -e "Version: ${Version}, Last Update:${Update}"
-    echo -e "使用教程请参考：https://blog.lintian.co/2021/07/13/aliyunddns"
+    echo -e "使用教程请参考：https://github.com/yatsuki/aliyunddns"
     echo -e "参数说明："
     echo -e "    -d, --domain         指定域名Ali_Domain,可以通过环境变量设置,两者都指定的时候脚本参数优先"
     echo -e "    -k, --key            指定Ali_Key,可以通过环境变量设置,两者都指定的时候脚本参数优先"

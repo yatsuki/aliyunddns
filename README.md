@@ -48,7 +48,7 @@
     -h, --help           显示此帮助信息  
  ```
 ## 使用参考
-[阿里云一键DDNS脚本](https://blog.lintian.co/2021/07/13/aliyunddns)
+[阿里云一键DDNS脚本](https://blog.lintian.co/?p=13)
 
 ## 附加说明
 1.此脚本仅作为简单管理DNS解析记录的工具,如需全面管理域名请使用官方工具/API.  
