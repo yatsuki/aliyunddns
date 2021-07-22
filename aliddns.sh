@@ -45,7 +45,10 @@ Msg_Fail="${Font_Red}[Failed] ${Font_Suffix}"
 Msg_Autofix="${Font_SkyBlue}[AutoFix] ${Font_Suffix}"
 
 Version=V0.1
-Update=2021-07-12
+Update=2021-07-22
+
+# 设置语言变量使sort排序以ASCII来排序
+export LC_ALL=C
 
 # 简易JSON解析器
 PharseJSON() {
@@ -132,6 +135,7 @@ AliDnsSendRequest() {
         echo -e "${Msg_Info}错误详细信息: `PharseJSON "${Var_RequestResult}" "Message"`"
         echo -e "${Msg_Debug}Request ID: `PharseJSON "${Var_RequestResult}" "RequestId"`"
         echo -e "${Msg_Debug}错误代码详细信息: `PharseJSON "${Var_RequestResult}" "Recommend"`"
+	echo -e "${Msg_Debug}请求参数: ${Val_AllArgs}"
         Var_ResponseCode="1"
         return 1
     else
@@ -233,6 +237,7 @@ AliDNSModify() {
     local Var_RecordId="`PharseJSON "${Var_RequestResult}" "RecordId"`"
     local Var_RecordType="`PharseJSON "${Var_RequestResult}" "Type"`"
     local Var_RecordValue="`PharseJSON "${Var_RequestResult}" "Value"`"
+    local Var_RR="`PharseJSON "${Var_RequestResult}" "RR"`"
     
     if [ "$Var_Value" = "$Var_RecordValue" ]; then
         echo -e "${Msg_Warning}[AliDNSModify]解析记录($Var_Record.$Ali_Domain -> $Var_Value)修改值一致,不需要修改!"
@@ -247,7 +252,7 @@ AliDNSModify() {
     # | Type=$Var_RecordType
     # | Value=$Var_Value
     # +---------------------------------
-    local Var_ModifyArgs=`echo -e "Actioon=UpdateDomainRecord\nRR=$Var_Record\nRecordId=$Var_RecordId\nType=$Var_RecordType\nValue=$Var_Value"`
+    local Var_ModifyArgs=`echo -e "Action=UpdateDomainRecord\nRR=$Var_RR\nRecordId=$Var_RecordId\nType=$Var_RecordType\nValue=$Var_Value"`
     # 发送请求
     AliDnsSendRequest "$Var_ModifyArgs"
     if [ "$Var_ResponseCode" -ne "0" ]; then
@@ -325,7 +330,7 @@ ShowVersion() {
 ShowHelp() {
     echo -e "阿里云DDNS解析脚本版"
     echo -e "Version: ${Version}, Last Update:${Update}"
-    echo -e "使用教程请参考：https://github.com/yatsuki/aliyunddns"
+    echo -e "使用教程请参考：https://blog.lintian.co/2021/07/13/aliyunddns"
     echo -e "参数说明："
     echo -e "    -d, --domain         指定域名Ali_Domain,可以通过环境变量设置,两者都指定的时候脚本参数优先"
     echo -e "    -k, --key            指定Ali_Key,可以通过环境变量设置,两者都指定的时候脚本参数优先"
